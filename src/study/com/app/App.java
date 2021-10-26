@@ -4,19 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.controller.MemberController;
 import study.com.dto.Article;
 import study.com.dto.Member;
 
 public class App {
 
-	List<Article> articles = new ArrayList<>();
-	List<Member> members = new ArrayList<>();
+	List<Article> articles;
+	List<Member> members;
+	
+	public App(){
+		articles = new ArrayList<>();
+		members = new ArrayList<>();
+	}
 
 	public void start() {
 
 		System.out.println("=== 프로그램 실행 ===");
 		Scanner scanner = new Scanner(System.in);
 
+		MemberController memberController = new MemberController(scanner, members);
 		makeTestData();
 
 		while (true) {
@@ -24,45 +31,9 @@ public class App {
 			String command = scanner.nextLine();
 
 			if (command.equals("member join")) {
-				System.out.println("회원가입 기능을 구현합니다.");
-
-				String loginId = null;
 				
-				while (true) {
-					System.out.println("회원가입 ID : ");
-					loginId = scanner.nextLine();
-
-					if (isJoinable(loginId)) {
-						System.out.println("이미 존재하는 아이디입니다.");
-						continue;
-					}
-					break;
-				}
-				String loginPw = null;
-				String loginPwConfirm = null;
-
-				while (true) {
-					System.out.println("회원가입 PW : ");
-					loginPw = scanner.nextLine();
-
-					System.out.println("회원가입 PW 확인 :");
-					loginPwConfirm = scanner.nextLine();
-
-					if (!loginPw.equals(loginPwConfirm)) {
-						System.out.println("비밀번호를 다시한번 확인해주세요.");
-						continue;
-					}
-					break;
-				}
-				System.out.println("회원가입 이름 : ");
-				String name = scanner.nextLine();
-
-				Member member = new Member(loginId, loginPw, name);
-
-				members.add(member);
-
-				System.out.println(member.name + "님 회원가입이 완료되었습니다.");
-
+				memberController.doJoin();
+				
 			} else if (command.equals("article write")) {
 				System.out.println("게시글 작성 기능을 구현합니다.");
 
@@ -226,16 +197,5 @@ public class App {
 			}
 		}
 		return foundArticle;
-	}
-	boolean isJoinable(String loginId) {
-		boolean check = false;
-
-		for (Member member : members) {
-			if (member.loginId.equals(loginId)) {
-				check = true;
-			}
-		}
-
-		return check;
 	}
 }
