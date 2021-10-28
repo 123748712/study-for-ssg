@@ -6,15 +6,39 @@ import java.util.Scanner;
 
 import study.com.dto.Article;
 
-public class ArticleController {
+public class ArticleController extends Controller{
 	private Scanner scanner;
 	private List<Article> articles;
+	private String command;
+	private String actionMethodName;
 
 	public ArticleController(Scanner scanner, List<Article> articles) {
 		this.scanner = scanner;
 		this.articles = articles;
 	}
 
+	public void doAction(String command, String actionMethodName) {
+		this.command = command;
+		this.actionMethodName = actionMethodName;
+		
+		switch (actionMethodName) {
+		case "write" :
+			doWrite();
+			break;
+		case "list" :
+			showList();
+			break;
+		case "detail" :
+			showDetail();
+			break;
+		case "modify" :
+			doModify();
+			break;
+		case "delete" :
+			doDelete();
+			break;
+		}
+	}
 	public void doWrite() {
 		System.out.println("게시글 작성 기능을 구현합니다.");
 
@@ -33,7 +57,7 @@ public class ArticleController {
 		System.out.println("내용 : " + body);
 	}
 
-	public void showList(String command) {
+	public void showList() {
 		System.out.println("게시글 리스트 기능을 구현합니다.");
 
 		if (articles.size() == 0) {
@@ -65,7 +89,7 @@ public class ArticleController {
 		}
 	}
 
-	public void showDetail(String command) {
+	public void showDetail() {
 		System.out.println("상세게시글 기능을 구현합니다.");
 		command = command.trim();
 		String[] commandBits = command.split(" ");
@@ -93,7 +117,7 @@ public class ArticleController {
 
 	}
 
-	public void doModify(String command) {
+	public void doModify() {
 		System.out.println("게시글 수정 기능을 구현합니다.");
 		command = command.trim();
 		String[] commandBits = command.split(" ");
@@ -125,7 +149,7 @@ public class ArticleController {
 		System.out.println(foundArticle.id + "번 게시글이 수정되었습니다.");
 
 	}
-	public void doDelete(String command) {
+	public void doDelete() {
 		System.out.println("게시글 삭제 기능을 구현합니다.");
 		command = command.trim();
 		String[] commandBits = command.split(" ");
@@ -169,5 +193,4 @@ public class ArticleController {
 		}
 		return foundId;
 	}
-
 }
