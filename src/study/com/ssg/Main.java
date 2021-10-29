@@ -7,13 +7,16 @@ import java.util.Scanner;
 import study.com.util.Util;
 
 public class Main {
+
+	static List<Article> articles = new ArrayList<>();
+
 	public static void main(String[] args) {
 
 		System.out.println("=== 프로그램 시작 ===");
 		Scanner scanner = new Scanner(System.in);
 		int articleId = 0;
-
-		List<Article> articles = new ArrayList<>();
+		
+		makeTestData();
 
 		while (true) {
 			System.out.println("명령어를 입력해주세요 : ");
@@ -74,9 +77,9 @@ public class Main {
 					System.out.println("게시글이 존재하지 않습니다.");
 					continue;
 				}
-				
+
 				foundArticle.increaseHit();
-				
+
 				System.out.println("번호 : " + foundArticle.id);
 				System.out.println("제목 : " + foundArticle.title);
 				System.out.println("내용 : " + foundArticle.body);
@@ -146,10 +149,24 @@ public class Main {
 				}
 
 				articles.remove(foundArticle);
-				
+
 				System.out.println(foundArticle.id + "번 게시글이 삭제되었습니다.");
+			} else if (command.equals("system exit")) {
+				System.out.println("프로그램을 종료합니다.");
+				break;
+			} else {
+				System.out.println("잘못된 명령어를 입력하셨습니다.");
 			}
 		}
+		System.out.println("=== 프로그램 종료 ===");
+	}
+
+	static void makeTestData() {
+		articles.add(new Article("제목 1", "내용 1"));
+		articles.add(new Article("제목 2", "내용 2"));
+		articles.add(new Article("제목 3", "내용 3"));
+		
+		System.out.println("Test Article 이 생성되었습니다.");
 	}
 }
 
@@ -168,6 +185,7 @@ class Article {
 		this.body = body;
 		this.regDate = Util.getNowDateStr();
 	}
+
 	void increaseHit() {
 		this.hit++;
 	}
