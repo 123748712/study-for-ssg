@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.util.Util;
+
 public class Main {
 	public static void main(String[] args) {
 
@@ -79,6 +81,7 @@ public class Main {
 				System.out.println("제목 : " + foundArticle.title);
 				System.out.println("내용 : " + foundArticle.body);
 				System.out.println("조회수 : " + foundArticle.hit);
+				System.out.println("작성날짜 : " + foundArticle.regDate);
 			} else if (command.startsWith("article modify ")) {
 				System.out.println("게시글 수정 기능을 구현합니다.");
 
@@ -163,6 +166,7 @@ class Article {
 		this.id = index;
 		this.title = title;
 		this.body = body;
+		this.regDate = Util.getNowDateStr();
 	}
 	void increaseHit() {
 		this.hit++;
