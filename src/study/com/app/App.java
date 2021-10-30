@@ -37,13 +37,7 @@ public class App {
 					System.out.println("회원가입 ID : ");
 					loginId = scanner.nextLine();
 
-					for (Member member : members) {
-						if (member.loginId.equals(loginId)) {
-							isJoinable = true;
-							break;
-						}
-					}
-					if (isJoinable) {
+					if (loginIdConfirm(loginId)) {
 						System.out.println("이미 존재하는 아이디입니다.");
 						continue;
 					}
@@ -237,5 +231,17 @@ public class App {
 			}
 		}
 		return foundArticle;
+	}
+
+	boolean loginIdConfirm(String loginId) {
+		boolean isJoinable = false;
+
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				isJoinable = true;
+				break;
+			}
+		}
+		return isJoinable;
 	}
 }
