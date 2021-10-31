@@ -7,7 +7,7 @@ import java.util.Scanner;
 import study.com.dto.Article;
 import study.com.dto.Member;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 	private Scanner scanner;
 	private List<Article> articles;
 
@@ -16,7 +16,30 @@ public class ArticleController {
 		this.articles = articles;
 	}
 
-	public void doWrite() {
+	public void doAction(String command, String actionMethodName) {
+		switch (actionMethodName) {
+		case "write":
+			doWrite();
+			break;
+		case "list":
+			showList(command);
+			break;
+		case "detail":
+			showDetail(command);
+			break;
+		case "modify":
+			doModify(command);
+			break;
+		case "delete":
+			doDelete(command);
+			break;
+		default:
+			System.out.println("잘못된 명렁어입니다.");
+			break;
+		}
+	}
+
+	private void doWrite() {
 		System.out.println("게시글 작성 기능을 구현합니다.");
 
 		System.out.println("제목 : ");
@@ -35,7 +58,7 @@ public class ArticleController {
 		System.out.println("내용 : " + body);
 	}
 
-	public void showList(String command) {
+	private void showList(String command) {
 		System.out.println("게시글 리스트 기능을 구현합니다.");
 
 		if (articles.size() == 0) {
@@ -66,7 +89,7 @@ public class ArticleController {
 		}
 	}
 
-	public void showDetail(String command) {
+	private void showDetail(String command) {
 		System.out.println("상세페이지 기능을 구현합니다.");
 
 		command = command.trim();
@@ -96,7 +119,7 @@ public class ArticleController {
 		System.out.println("작성날짜 : " + foundArticle.regDate);
 	}
 
-	public void doModify(String command) {
+	private void doModify(String command) {
 		System.out.println("게시글 수정 기능을 구현합니다.");
 
 		command = command.trim();
@@ -123,7 +146,7 @@ public class ArticleController {
 		System.out.println(foundArticle.id + "번 게시글이 수정되었습니다.");
 	}
 
-	public void doDelete(String command) {
+	private void doDelete(String command) {
 		System.out.println("게시글 삭제 기능을 구현합니다.");
 
 		command = command.trim();

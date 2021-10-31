@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import study.com.dto.Member;
 
-public class MemberController {
+public class MemberController extends Controller {
 	private Scanner scanner;
 	private List<Member> members;
 
@@ -13,8 +13,19 @@ public class MemberController {
 		this.scanner = scanner;
 		this.members = members;
 	}
-	
-	public void doJoin() {
+
+	public void doAction(String command, String actionMethodName) {
+		switch(actionMethodName) {
+		case "join" :
+			doJoin();
+			break;
+			default :
+				System.out.println("잘못된 명렁어입니다.");
+				break;
+		}
+	}
+
+	private void doJoin() {
 		System.out.println("회원가입 기능을 구현합니다.");
 
 		String loginId = null;
@@ -56,6 +67,7 @@ public class MemberController {
 		members.add(member);
 		System.out.println(member.name + "님 회원가입이 완료되었습닌다.");
 	}
+
 	boolean loginIdConfirm(String loginId) {
 		boolean isJoinable = false;
 
