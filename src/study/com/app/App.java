@@ -25,11 +25,12 @@ public class App {
 		System.out.println("=== 프로그램 시작 ===");
 		Scanner scanner = new Scanner(System.in);
 
-		makeTestData();
 		ArticleController articleController = new ArticleController(scanner, articles);
 		MemberController memberController = new MemberController(scanner, members);
 		Controller controller = null;
-
+		
+		articleController.makeTestData();
+		memberController.makeTestData();
 		while (true)
 
 		{
@@ -62,13 +63,5 @@ public class App {
 			controller.doAction(command, actionMethodName);
 		}
 		System.out.println("=== 프로그램 종료 ===");
-	}
-
-	void makeTestData() {
-		articles.add(new Article("제목 1", "내용 1"));
-		articles.add(new Article("제목 2", "내용 2"));
-		articles.add(new Article("제목 3", "내용 3"));
-
-		System.out.println("Test Article 이 생성되었습니다.");
 	}
 }
