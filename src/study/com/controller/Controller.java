@@ -6,5 +6,5 @@ public abstract class Controller {
 
 	public abstract void doAction(String command, String acthinMethodName);
 
-	Member loginedMember = null;
+	static Member loginedMember = null;
 }
