@@ -47,7 +47,7 @@ public class App {
 			String actionMethodName = commandBits[1];
 
 			if (!command.startsWith("article list")) {
-				if (commandBits.length > 3) {
+				if (commandBits.length >= 3) {
 					System.out.println("잘못된 명령어를 입력하셨습니다.");
 					continue;
 				}
@@ -58,7 +58,7 @@ public class App {
 			} else if (controllerName.equals("member")) {
 				controller = memberController;
 			} else {
-				System.out.println("잘못된 명렁어를 입력하셨습니다.");
+				System.out.println("잘못된 명령어를 입력하셨습니다.");
 			}
 			controller.doAction(command, actionMethodName);
 		}

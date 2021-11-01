@@ -34,15 +34,15 @@ public class ArticleController extends Controller {
 			doDelete(command);
 			break;
 		default:
-			System.out.println("잘못된 명렁어입니다.");
+			System.out.println("잘못된 명령어입니다.");
 			break;
 		}
 	}
 
 	private void doWrite() {
 		System.out.println("게시글 작성 기능을 구현합니다.");
-		
-		if(loginedMember == null) {
+
+		if (loginedMember == null) {
 			System.out.println("로그인 후 이용해주세요.");
 			return;
 		}
@@ -99,6 +99,7 @@ public class ArticleController extends Controller {
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
+
 		String checkStr = commandBits[2];
 
 		int foundId = getfoundArticleByCheckStr(checkStr);
@@ -127,9 +128,15 @@ public class ArticleController extends Controller {
 
 	private void doModify(String command) {
 		System.out.println("게시글 수정 기능을 구현합니다.");
+		
+		if(loginedMember == null) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
+		
 		String checkStr = commandBits[2];
 
 		int foundId = getfoundArticleByCheckStr(checkStr);
@@ -145,6 +152,12 @@ public class ArticleController extends Controller {
 			System.out.println("게시글이 존재하지 않습니다.");
 			return;
 		}
+		
+		if(loginedMember.memberId != foundArticle.memberId) {
+			System.out.println("권한이 없습니다.");
+			return;
+		}
+
 		System.out.println("제목 : ");
 		foundArticle.title = scanner.nextLine();
 		System.out.println("내용 : ");
@@ -154,6 +167,11 @@ public class ArticleController extends Controller {
 
 	private void doDelete(String command) {
 		System.out.println("게시글 삭제 기능을 구현합니다.");
+		
+		if(loginedMember == null) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
@@ -172,7 +190,6 @@ public class ArticleController extends Controller {
 			System.out.println("게시글이 존재하지 않습니다.");
 			return;
 		}
-
 		articles.remove(foundArticle);
 
 		System.out.println(foundArticle.id + "번 게시글이 삭제되었습니다.");
@@ -199,6 +216,7 @@ public class ArticleController extends Controller {
 		}
 		return foundArticle;
 	}
+
 	public void makeTestData() {
 		articles.add(new Article("제목 1", "내용 1", 1, "admin"));
 		articles.add(new Article("제목 2", "내용 2", 2, "user 1"));
