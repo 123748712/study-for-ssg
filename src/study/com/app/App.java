@@ -12,21 +12,13 @@ import study.com.dto.Member;
 
 public class App {
 
-	List<Article> articles;
-	List<Member> members;
-
-	public App() {
-		articles = new ArrayList<>();
-		members = new ArrayList<>();
-	}
-
 	public void start() {
 
 		System.out.println("=== 프로그램 시작 ===");
 		Scanner scanner = new Scanner(System.in);
 
-		ArticleController articleController = new ArticleController(scanner, articles);
-		MemberController memberController = new MemberController(scanner, members);
+		ArticleController articleController = new ArticleController(scanner);
+		MemberController memberController = new MemberController(scanner);
 		Controller controller = null;
 		
 		articleController.makeTestData();
