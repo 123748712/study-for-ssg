@@ -1,14 +1,11 @@
 package study.com.app;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
+import study.com.container.Container;
 import study.com.controller.ArticleController;
 import study.com.controller.Controller;
 import study.com.controller.MemberController;
-import study.com.dto.Article;
-import study.com.dto.Member;
 
 public class App {
 
@@ -20,12 +17,11 @@ public class App {
 		ArticleController articleController = new ArticleController(scanner);
 		MemberController memberController = new MemberController(scanner);
 		Controller controller = null;
-		
-		articleController.makeTestData();
-		memberController.makeTestData();
-		while (true)
 
-		{
+		Container.articleDao.makeTestData();
+		memberController.makeTestData();
+		
+		while (true) {
 			System.out.println("명령어를 입력해주세요 : ");
 			String command = scanner.nextLine().trim();
 
