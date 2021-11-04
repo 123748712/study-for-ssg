@@ -19,7 +19,7 @@ public class App {
 		Controller controller = null;
 
 		Container.articleDao.makeTestData();
-		memberController.makeTestData();
+		Container.memberDao.makeTestData();
 		
 		while (true) {
 			System.out.println("명령어를 입력해주세요 : ");
@@ -35,12 +35,12 @@ public class App {
 			String actionMethodName = commandBits[1];
 
 			if (!command.startsWith("article list")) {
-				if (commandBits.length >= 3) {
+				if (controllerName == "article" && commandBits.length != 3) {
 					System.out.println("잘못된 명령어를 입력하셨습니다.");
 					continue;
 				}
 			}
-
+			
 			if (controllerName.equals("article")) {
 				controller = articleController;
 			} else if (controllerName.equals("member")) {

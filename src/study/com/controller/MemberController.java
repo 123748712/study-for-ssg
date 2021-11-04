@@ -5,14 +5,17 @@ import java.util.Scanner;
 
 import study.com.container.Container;
 import study.com.dto.Member;
+import study.com.service.MemberService;
 
 public class MemberController extends Controller {
 	private Scanner scanner;
 	private List<Member> members;
+	private MemberService memberService;
 
 	public MemberController(Scanner scanner) {
 		this.scanner = scanner;
 		this.members = Container.memberDao.members;
+		this.memberService = new MemberService();
 	}
 
 	public void doAction(String command, String actionMethodName) {
@@ -38,8 +41,6 @@ public class MemberController extends Controller {
 		String loginId = null;
 
 		while (true) {
-			boolean isJoinable = false;
-
 			System.out.println("회원가입 ID : ");
 			loginId = scanner.nextLine();
 
@@ -71,8 +72,9 @@ public class MemberController extends Controller {
 
 		Member member = new Member(loginId, loginPw, name);
 
-		members.add(member);
-		System.out.println(member.name + "님 회원가입이 완료되었습닌다.");
+		memberService.add(member);
+		
+		System.out.println(member.name + "님 회원가입이 완료되었습니다.");
 	}
 
 	private void doLogin() {
@@ -87,7 +89,7 @@ public class MemberController extends Controller {
 		System.out.println("로그인 PW : ");
 		String loginPw = scanner.nextLine();
 
-		Member foundMember = getMemberByLoginId(loginId);
+		Member foundMember = memberService.getMemberByLoginId(loginId);
 
 		if (foundMember == null) {
 			System.out.println("아이디를 잘못 입력하셨습니다.");
@@ -123,24 +125,5 @@ public class MemberController extends Controller {
 			}
 		}
 		return isJoinable;
-	}
-
-	Member getMemberByLoginId(String loginId) {
-		Member foundMember = null;
-
-		for (Member member : members) {
-			if (member.loginId.equals(loginId)) {
-				foundMember = member;
-			}
-		}
-		return foundMember;
-	}
-
-	public void makeTestData() {
-		members.add(new Member("admin", "admin", "admin"));
-		members.add(new Member("user 1", "user 1", "user 1"));
-		members.add(new Member("user 2", "user 2", "user 2"));
-
-		System.out.println("Test Member 이 생성되었습니다.");
 	}
 }

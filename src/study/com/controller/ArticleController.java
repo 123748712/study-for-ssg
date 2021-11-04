@@ -14,7 +14,7 @@ public class ArticleController extends Controller {
 
 	public ArticleController(Scanner scanner) {
 		this.scanner = scanner;
-		this.articleService = articleService;
+		this.articleService = new ArticleService();
 	}
 
 	public void doAction(String command, String actionMethodName) {
