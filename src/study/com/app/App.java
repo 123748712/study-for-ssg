@@ -42,11 +42,34 @@ public class App {
 				System.out.println("제목 : " + title);
 				System.out.println("내용 : " + body);
 
-			} else if (command.equals("article list")) {
+			} else if (command.startsWith("article list")) {
 				System.out.println("게시글 리스트 기능을 구현합니다.");
 
+				if (articles.size() == 0) {
+					System.out.println("게시글이 없습니다.");
+					continue;
+				}
+
+				String searchKeyword = command.substring("article list".length()).trim();
+
+				List<Article> searchedArticles = new ArrayList<>();
+
+				if (searchKeyword.length() > 0) {
+					for (Article article : articles) {
+						if (article.title.contains(searchKeyword));
+						searchedArticles.add(article);
+					}
+				}
+
+				if (searchedArticles.size() == 0) {
+					System.out.println("검색된 게시글이 존재하지 않습니다.");
+					continue;
+				} else {
+					searchedArticles = articles;
+				}
+
 				System.out.println("제목  |  내용  |  조회수");
-				for (Article article : articles) {
+				for (Article article : searchedArticles) {
 					System.out.println(article.id + " | " + article.title + " | " + article.hit);
 				}
 			} else if (command.startsWith("article detail ")) {
@@ -133,6 +156,7 @@ public class App {
 				break;
 			} else {
 				System.out.println("잘못된 명령어를 입력하셨습니다.");
+				continue;
 			}
 		}
 		System.out.println("=== 프로그램 종료 ===");
