@@ -3,6 +3,7 @@ package study.com.controller;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.dto.Article;
 import study.com.dto.Member;
 
 public class MemberController extends Controller {
@@ -121,5 +122,12 @@ public class MemberController extends Controller {
 			}
 		}
 		return isJoinable;
+	}
+	public void makeTestData() {
+		members.add(new Member("admin", "admin", "admin"));
+		members.add(new Member("user 1", "user 1", "user 1"));
+		members.add(new Member("user 2", "user 2", "user 2"));
+
+		System.out.println("Test Member 가 생성되었습니다.");
 	}
 }
