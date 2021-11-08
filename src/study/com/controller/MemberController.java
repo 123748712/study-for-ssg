@@ -13,14 +13,21 @@ public class MemberController extends Controller {
 		this.scanner = scanner;
 		this.members = members;
 	}
+
 	public void doAction(String command, String actionMethodName) {
-		switch(actionMethodName) {
-		case "join" :
+		switch (actionMethodName) {
+		case "join":
 			doJoin();
+			break;
+		case "login":
+			doLogin();
+			break;
+		default:
+			System.out.println("명령어를 잘못 입력하셨습니다.");
 			break;
 		}
 	}
-	
+
 	public void doJoin() {
 		System.out.println("회원가입 기능을 구현합니다.");
 
@@ -61,6 +68,47 @@ public class MemberController extends Controller {
 		members.add(member);
 
 		System.out.println(name + "님 회원가입이 완료되었습니다.");
+	}
+
+	public void doLogin() {
+		System.out.println("로그인 기능을 구현합니다.");
+
+		if (loginedMember != null) {
+			System.out.println("이미 로그인 되어있습니다.");
+			return;
+		}
+
+		System.out.println("login ID : ");
+		String loginId = scanner.nextLine();
+
+		System.out.println("login PW : ");
+		String loginPw = scanner.nextLine();
+
+		Member foundMember = getMemberByloginId(loginId);
+
+		if (foundMember == null) {
+			System.out.println("존재하지 않는 ID 입니다.");
+			return;
+		}
+
+		if (!foundMember.loginPw.equals(loginPw)) {
+			System.out.println("비밀번호를 잘못 입력하셨습니다.");
+			return;
+		}
+		loginedMember = foundMember;
+
+		System.out.println(foundMember.name + "님 로그인 되었습니다.");
+	}
+
+	private Member getMemberByloginId(String loginId) {
+		Member foundMember = null;
+
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				foundMember = member;
+			}
+		}
+		return foundMember;
 	}
 
 	boolean isJoinable(String loginId) {

@@ -33,6 +33,9 @@ public class ArticleController extends Controller {
 		case "delete":
 			doDelete(command);
 			break;
+		default:
+			System.out.println("명령어를 잘못 입력하셨습니다.");
+			break;
 		}
 	}
 
