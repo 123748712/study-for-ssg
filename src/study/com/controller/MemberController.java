@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import study.com.dto.Member;
 
-public class MemberController {
+public class MemberController extends Controller {
 	private Scanner scanner;
 	private List<Member> members;
 
@@ -13,7 +13,14 @@ public class MemberController {
 		this.scanner = scanner;
 		this.members = members;
 	}
-
+	public void doAction(String command, String actionMethodName) {
+		switch(actionMethodName) {
+		case "join" :
+			doJoin();
+			break;
+		}
+	}
+	
 	public void doJoin() {
 		System.out.println("회원가입 기능을 구현합니다.");
 

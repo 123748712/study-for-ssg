@@ -7,13 +7,33 @@ import java.util.Scanner;
 import study.com.dto.Article;
 import study.com.dto.Member;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 	private Scanner scanner;
 	private List<Article> articles;
 
 	public ArticleController(Scanner scanner, List<Article> articles) {
 		this.scanner = scanner;
 		this.articles = articles;
+	}
+
+	public void doAction(String command, String actionMethodName) {
+		switch (actionMethodName) {
+		case "write":
+			doWrite();
+			break;
+		case "list":
+			showList(command);
+			break;
+		case "detail":
+			showDetail(command);
+			break;
+		case "modify":
+			doModify(command);
+			break;
+		case "delete":
+			doDelete(command);
+			break;
+		}
 	}
 
 	public void doWrite() {
@@ -49,15 +69,15 @@ public class ArticleController {
 
 		if (searchKeyword.length() > 0) {
 			for (Article article : articles) {
-				if (article.title.contains(searchKeyword))
-					;
-				searchedArticles.add(article);
+				if (article.title.contains(searchKeyword)) {
+					searchedArticles.add(article);
+				}
 			}
-		}
 
-		if (searchedArticles.size() == 0) {
-			System.out.println("검색된 게시글이 존재하지 않습니다.");
-			return;
+			if (searchedArticles.size() == 0) {
+				System.out.println("검색된 게시글이 존재하지 않습니다.");
+				return;
+			}
 		} else {
 			searchedArticles = articles;
 		}
@@ -97,6 +117,7 @@ public class ArticleController {
 		System.out.println("조회수 : " + foundArticle.hit);
 		System.out.println("작성날짜 : " + foundArticle.regDate);
 	}
+
 	public void doModify(String command) {
 		System.out.println("게시글 수정 기능을 구현합니다.");
 
@@ -124,6 +145,7 @@ public class ArticleController {
 		foundArticle.body = scanner.nextLine();
 		System.out.println(foundArticle.id + "번 게시글이 수정되었습니다.");
 	}
+
 	public void doDelete(String command) {
 		System.out.println("게시글 삭제 기능을 구현합니다.");
 
