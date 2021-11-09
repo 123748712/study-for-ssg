@@ -23,12 +23,14 @@ public class MemberController extends Controller {
 		case "login":
 			doLogin();
 			break;
+		case "logout" :
+			doLogout();
+			break;
 		default:
 			System.out.println("명령어를 잘못 입력하셨습니다.");
 			break;
 		}
 	}
-
 	public void doJoin() {
 		System.out.println("회원가입 기능을 구현합니다.");
 
@@ -100,6 +102,17 @@ public class MemberController extends Controller {
 
 		System.out.println(foundMember.name + "님 로그인 되었습니다.");
 	}
+
+	public void doLogout() {
+		System.out.println("로그아웃 기능을 구현합니다.");
+		
+		if(loginedMember == null) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
+			loginedMember = null;
+			System.out.println("로그아웃 되었습니다.");
+		}
 
 	private Member getMemberByloginId(String loginId) {
 		Member foundMember = null;
