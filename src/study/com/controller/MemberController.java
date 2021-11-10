@@ -98,6 +98,7 @@ public class MemberController extends Controller {
 			System.out.println("비밀번호를 잘못 입력하셨습니다.");
 			return;
 		}
+		
 		loginedMember = foundMember;
 
 		System.out.println(foundMember.name + "님 로그인 되었습니다.");
