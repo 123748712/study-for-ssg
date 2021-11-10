@@ -31,7 +31,7 @@ public class MemberController extends Controller {
 			break;
 		}
 	}
-	public void doJoin() {
+	private void doJoin() {
 		System.out.println("회원가입 기능을 구현합니다.");
 
 		String loginId = null;
@@ -73,7 +73,7 @@ public class MemberController extends Controller {
 		System.out.println(name + "님 회원가입이 완료되었습니다.");
 	}
 
-	public void doLogin() {
+	private void doLogin() {
 		System.out.println("로그인 기능을 구현합니다.");
 
 		if (loginedMember != null) {
@@ -101,10 +101,10 @@ public class MemberController extends Controller {
 		
 		loginedMember = foundMember;
 
-		System.out.println(foundMember.name + "님 로그인 되었습니다.");
+		System.out.println(loginedMember.name + "님 로그인 되었습니다.");
 	}
 
-	public void doLogout() {
+	private void doLogout() {
 		System.out.println("로그아웃 기능을 구현합니다.");
 		
 		if(loginedMember == null) {
