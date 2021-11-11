@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.container.Container;
 import study.com.controller.ArticleController;
 import study.com.controller.Controller;
 import study.com.controller.MemberController;
@@ -21,7 +22,7 @@ public class App {
 		MemberController memberController = new MemberController(scanner);
 		Controller controller = null;
 		
-		articleController.makeTestData();
+		Container.articleDao.makeTestData();
 		memberController.makeTestData();
 		while (true) {
 			System.out.println("명령어를 입력해주세요 : ");
