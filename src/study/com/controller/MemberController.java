@@ -3,16 +3,16 @@ package study.com.controller;
 import java.util.List;
 import java.util.Scanner;
 
-import study.com.dto.Article;
+import study.com.container.Container;
 import study.com.dto.Member;
 
 public class MemberController extends Controller {
 	private Scanner scanner;
 	private List<Member> members;
 
-	public MemberController(Scanner scanner, List<Member> members) {
+	public MemberController(Scanner scanner) {
 		this.scanner = scanner;
-		this.members = members;
+		this.members = Container.memberDao.members;
 	}
 
 	public void doAction(String command, String actionMethodName) {

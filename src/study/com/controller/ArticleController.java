@@ -11,7 +11,7 @@ public class ArticleController extends Controller {
 	private Scanner scanner;
 	private List<Article> articles;
 
-	public ArticleController(Scanner scanner, List<Article> articles) {
+	public ArticleController(Scanner scanner) {
 		this.scanner = scanner;
 		this.articles = Container.articleDao.articles;
 	}
