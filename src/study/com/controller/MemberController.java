@@ -3,16 +3,17 @@ package study.com.controller;
 import java.util.List;
 import java.util.Scanner;
 
-import study.com.container.Container;
 import study.com.dto.Member;
+import study.com.service.MemberService;
 
 public class MemberController extends Controller {
 	private Scanner scanner;
 	private List<Member> members;
+	private MemberService memberService;
 
 	public MemberController(Scanner scanner) {
 		this.scanner = scanner;
-		this.members = Container.memberDao.members;
+		this.memberService = new MemberService();
 	}
 
 	public void doAction(String command, String actionMethodName) {
@@ -68,7 +69,7 @@ public class MemberController extends Controller {
 
 		Member member = new Member(loginId, loginPw, name);
 
-		members.add(member);
+		memberService.add(member);
 
 		System.out.println(name + "님 회원가입이 완료되었습니다.");
 	}
@@ -87,7 +88,7 @@ public class MemberController extends Controller {
 		System.out.println("login PW : ");
 		String loginPw = scanner.nextLine();
 
-		Member foundMember = getMemberByloginId(loginId);
+		Member foundMember = memberService.getMemberByloginId(loginId);
 
 		if (foundMember == null) {
 			System.out.println("존재하지 않는 ID 입니다.");
@@ -115,17 +116,6 @@ public class MemberController extends Controller {
 			System.out.println("로그아웃 되었습니다.");
 		}
 
-	private Member getMemberByloginId(String loginId) {
-		Member foundMember = null;
-
-		for (Member member : members) {
-			if (member.loginId.equals(loginId)) {
-				foundMember = member;
-			}
-		}
-		return foundMember;
-	}
-
 	boolean isJoinable(String loginId) {
 		boolean isJoinable = false;
 
@@ -136,12 +126,5 @@ public class MemberController extends Controller {
 			}
 		}
 		return isJoinable;
-	}
-	public void makeTestData() {
-		members.add(new Member("admin", "admin", "admin"));
-		members.add(new Member("user 1", "user 1", "user 1"));
-		members.add(new Member("user 2", "user 2", "user 2"));
-
-		System.out.println("Test Member 가 생성되었습니다.");
 	}
 }
