@@ -30,48 +30,40 @@ public class App {
 				String loginId = null;
 
 				while (true) {
-					boolean isJoinable = false;
-
 					System.out.println("회원가입 ID : ");
 					loginId = scanner.nextLine();
 
-					for (Member member : members) {
-						if (member.loginId.equals(loginId)) {
-							isJoinable = true;
-							break;
-						}
-					}
-					if (isJoinable) {
+					if (isJoinable(loginId)) {
 						System.out.println("이미 존재하는 ID 입니다.");
 						continue;
 					}
 					break;
 				}
-				
+
 				String loginPw = null;
 				String loginPwConfirm = null;
-				
-				while(true) {
+
+				while (true) {
 					System.out.println("회원가입 PW : ");
 					loginPw = scanner.nextLine();
-					
+
 					System.out.println("회원가입 PW 확인 : ");
 					loginPwConfirm = scanner.nextLine();
-					
-					if(!loginPw.equals(loginPwConfirm)) {
+
+					if (!loginPw.equals(loginPwConfirm)) {
 						System.out.println("비미번호를 확인해주세요.");
 						continue;
 					}
 					break;
 				}
-				
+
 				System.out.println("회원가입 이름 : ");
 				String name = scanner.nextLine();
-				
+
 				Member member = new Member(loginId, loginPw, name);
-				
+
 				members.add(member);
-				
+
 				System.out.println(member.name + "님 회원가입이 완료되었습니다.");
 			} else if (command.equals("article write")) {
 				System.out.println("게시글 작성 기능을 구현합니다.");
@@ -236,5 +228,18 @@ public class App {
 			}
 		}
 		return foundArticle;
+	}
+
+	boolean isJoinable(String loginId) {
+		boolean isJoinable = false;
+
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				isJoinable = true;
+				break;
+			}
+		}
+		return isJoinable;
+
 	}
 }
