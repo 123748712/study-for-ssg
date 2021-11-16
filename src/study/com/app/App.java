@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.Scanner;
 
 import study.com.controller.ArticleController;
+import study.com.controller.MemberController;
 import study.com.dto.Article;
 import study.com.dto.Member;
 
 public class App {
 
 	List<Article> articles;
-	List<Member> members = new ArrayList<>();
+	List<Member> members;
 
 	public App() {
 		articles = new ArrayList<>();
+		members = new ArrayList<>();
 	}
 
 	public void start() {
@@ -25,6 +27,8 @@ public class App {
 		makeTestData();
 
 		ArticleController articleController = new ArticleController(scanner, articles);
+		MemberController memberController = new MemberController(scanner, members);
+		
 
 		while (true)
 
@@ -32,46 +36,7 @@ public class App {
 			System.out.println("명령어를 입력해주세요 : ");
 			String command = scanner.nextLine();
 			if (command.equals("member join")) {
-				System.out.println("회원가입 기능을 구현합니다.");
-
-				String loginId = null;
-
-				while (true) {
-					System.out.println("회원가입 ID : ");
-					loginId = scanner.nextLine();
-
-					if (isJoinable(loginId)) {
-						System.out.println("이미 존재하는 ID 입니다.");
-						continue;
-					}
-					break;
-				}
-
-				String loginPw = null;
-				String loginPwConfirm = null;
-
-				while (true) {
-					System.out.println("회원가입 PW : ");
-					loginPw = scanner.nextLine();
-
-					System.out.println("회원가입 PW 확인 : ");
-					loginPwConfirm = scanner.nextLine();
-
-					if (!loginPw.equals(loginPwConfirm)) {
-						System.out.println("비미번호를 확인해주세요.");
-						continue;
-					}
-					break;
-				}
-
-				System.out.println("회원가입 이름 : ");
-				String name = scanner.nextLine();
-
-				Member member = new Member(loginId, loginPw, name);
-
-				members.add(member);
-
-				System.out.println(member.name + "님 회원가입이 완료되었습니다.");
+			memberController.doJoin();
 			} else if (command.equals("article write")) {
 				articleController.doWrite();
 			} else if (command.startsWith("article list")) {
@@ -98,18 +63,5 @@ public class App {
 		articles.add(new Article("제목 3", "내용 3"));
 
 		System.out.println("Test Article 이 생성되었습니다.");
-	}
-
-	boolean isJoinable(String loginId) {
-		boolean isJoinable = false;
-
-		for (Member member : members) {
-			if (member.loginId.equals(loginId)) {
-				isJoinable = true;
-				break;
-			}
-		}
-		return isJoinable;
-
 	}
 }
