@@ -19,13 +19,45 @@ public class MemberController extends Controller {
 		case "join":
 			doJoin();
 			break;
+		case "login" :
+			doLogin();
 		default:
 			System.out.println("잘못된 명령어를 입력하셨습니다.");
 			break;
 		}
 	}
 
-	public void doJoin() {
+	private void doLogin() {
+		System.out.println("로그인 기능을 구현합니다.");
+
+		if (loginedMember != null) {
+			System.out.println("이미 로그인되어 있습니다.");
+			return;
+		}
+
+		System.out.println("ID : ");
+		String loginId = scanner.nextLine();
+
+		System.out.println("PW : ");
+		String loginPw = scanner.nextLine();
+
+		Member foundMember = getMemberByLoginId(loginId);
+		
+		if(foundMember == null) {
+			System.out.println("존재하지 않는 아이디입니다.");
+			return;
+		}
+		if(!foundMember.loginPw.equals(loginPw)) {
+			System.out.println("비밀번호를 잘못 입력하셨습니다.");
+			return;
+		}
+		
+		loginedMember = foundMember;
+		
+		System.out.println(foundMember.name + "님 로그인 되었습니다.");
+	}
+
+	private void doJoin() {
 		System.out.println("회원가입 기능을 구현합니다.");
 
 		String loginId = null;
@@ -78,6 +110,16 @@ public class MemberController extends Controller {
 			}
 		}
 		return isJoinable;
+	}
 
+	Member getMemberByLoginId(String loginId) {
+		Member foundMember = null;
+
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				foundMember = member;
+			}
+		}
+		return foundMember;
 	}
 }
