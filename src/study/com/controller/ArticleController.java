@@ -6,13 +6,36 @@ import java.util.Scanner;
 
 import study.com.dto.Article;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 	private Scanner scanner;
 	private List<Article> articles;
 
 	public ArticleController(Scanner scanner, List<Article> articles) {
 		this.scanner = scanner;
 		this.articles = articles;
+	}
+
+	public void doAction(String command, String actionMethodName) {
+		switch (actionMethodName) {
+		case "write":
+			doWrite();
+			break;
+		case "list":
+			showList(command);
+			break;
+		case "detail":
+			showDetail(command);
+			break;
+		case "modify":
+			doModify(command);
+			break;
+		case "delete":
+			doDelete(command);
+			break;
+		default:
+			System.out.println("잘못된 명령어를 입력하셨습니다.");
+			break;
+		}
 	}
 
 	public void doWrite() {
@@ -34,7 +57,7 @@ public class ArticleController {
 		System.out.println("내용 : " + body);
 	}
 
-	public void doList(String command) {
+	public void showList(String command) {
 		System.out.println("게시글 리스트 기능을 구현합니다.");
 
 		if (articles.size() == 0) {
@@ -67,7 +90,7 @@ public class ArticleController {
 		}
 	}
 
-	public void doDetail(String command) {
+	public void showDetail(String command) {
 		System.out.println("상세페이지 기능을 구현합니다.");
 
 		command = command.trim();
@@ -121,7 +144,7 @@ public class ArticleController {
 		foundArticle.title = scanner.nextLine();
 		System.out.println("내용 : ");
 		foundArticle.body = scanner.nextLine();
-		System.out.println(foundArticle.id + "번 게시글이 수정되었습니다.");		
+		System.out.println(foundArticle.id + "번 게시글이 수정되었습니다.");
 	}
 
 	public void doDelete(String command) {
@@ -149,6 +172,7 @@ public class ArticleController {
 
 		System.out.println(foundArticle.id + "번 게시글이 삭제되었습니다.");
 	}
+
 	Article getFoundArticleById(int foundId) {
 		Article foundArticle = null;
 		for (Article article : articles) {
@@ -158,10 +182,11 @@ public class ArticleController {
 		}
 		return foundArticle;
 	}
+
 	int getFoundIdByCheckStr(String checkStr) {
 		boolean checkInt = checkStr.matches("-?\\d+");
 
-		int foundId = getFoundIdByCheckStr(checkStr);
+		int foundId = 0;
 
 		if (checkInt) {
 			foundId = Integer.parseInt(checkStr);

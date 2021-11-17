@@ -5,13 +5,24 @@ import java.util.Scanner;
 
 import study.com.dto.Member;
 
-public class MemberController {
+public class MemberController extends Controller {
 	private Scanner scanner;
 	private List<Member> members;
 
 	public MemberController(Scanner scanner, List<Member> members) {
 		this.scanner = scanner;
 		this.members = members;
+	}
+
+	public void doAction(String command, String actionMethodName) {
+		switch (actionMethodName) {
+		case "join":
+			doJoin();
+			break;
+		default:
+			System.out.println("잘못된 명령어를 입력하셨습니다.");
+			break;
+		}
 	}
 
 	public void doJoin() {
@@ -56,7 +67,7 @@ public class MemberController {
 
 		System.out.println(member.name + "님 회원가입이 완료되었습니다.");
 	}
-	
+
 	boolean isJoinable(String loginId) {
 		boolean isJoinable = false;
 
