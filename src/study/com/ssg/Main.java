@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.util.Util;
+
 public class Main {
+	
+	static List<Article> articles = new ArrayList<>();
+	
 	public static void main(String[] args) {
 
 		System.out.println("=== 프로그램 실행 ===");
 		Scanner scanner = new Scanner(System.in);
-		List<Article> articles = new ArrayList<>();
+		makeTestData();
 
 		while (true) {
 			System.out.println("명령어를 입력해주세요 : ");
@@ -74,10 +79,13 @@ public class Main {
 					System.out.println("게시글이 존재하지 않습니다.");
 					continue;
 				}
-
+				foundArticle.increaseHit();
+				
 				System.out.println("=== 검색된 게시글을 불러옵니다. ===");
 				System.out.println("제목 : " + foundArticle.title);
 				System.out.println("번호 : " + foundArticle.articleId);
+				System.out.println("조회수 : " + foundArticle.hit);
+				System.out.println("작성날짜 : " + foundArticle.regDate);
 				System.out.println("내용 : " + foundArticle.body);
 			} else if (command.startsWith("article modify ")) {
 				System.out.println("게시글 수정 기능을 구현합니다.");
@@ -180,6 +188,14 @@ public class Main {
 		}
 		System.out.println("=== 프로그램 종료 ===");
 	}
+
+	static void makeTestData() {
+		System.out.println("Article Test 데이터를 생성합니다.");
+		
+		articles.add(new Article("제목 1", "내용 1"));
+		articles.add(new Article("제목 2", "내용 2"));		
+		articles.add(new Article("제목 3", "내용 3"));
+	}
 }
 
 class Article {
@@ -187,11 +203,17 @@ class Article {
 	String title;
 	String body;
 	int articleId;
+	String regDate;
+	int hit;
 
 	Article(String title, String body) {
 		this.index++;
 		this.articleId = index;
 		this.title = title;
 		this.body = body;
+		this.regDate = Util.getNowDateStr();
+	}
+	void increaseHit() {
+		this.hit++;
 	}
 }
