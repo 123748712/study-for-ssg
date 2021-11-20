@@ -2,7 +2,7 @@ package study.com.dto;
 
 import study.com.util.Util;
 
-public class Article {
+public class Article extends Dto {
 	public static int index;
 	public String title;
 	public String body;
