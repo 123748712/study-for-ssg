@@ -8,7 +8,7 @@ import study.com.dto.Article;
 
 public class App {
 
-	static List<Article> articles = new ArrayList<>();
+	List<Article> articles = new ArrayList<>();
 
 	public void start() {
 
@@ -57,27 +57,15 @@ public class App {
 
 				String checkStr = commandBits[2];
 
-				boolean checkInt = checkStr.matches("-?\\d+");
+				int foundId = getFoundIdByCheckStr(checkStr);
 
-				int foundId = 0;
-
-				if (checkInt) {
-					foundId = Integer.parseInt(checkStr);
-				} else {
+				if (foundId == 0) {
 					System.out.println("숫자만 입력해주세요.");
 					continue;
 				}
 
-				Article foundArticle = null;
+				Article foundArticle = getFoundArticleById(foundId);
 
-				for (Article article : articles) {
-					if (article.articleId == foundId) {
-						foundArticle = article;
-					} else {
-						System.out.println("검색된 게시글이 존재하지 않습니다.");
-						continue;
-					}
-				}
 				if (foundArticle == null) {
 					System.out.println("게시글이 존재하지 않습니다.");
 					continue;
@@ -104,27 +92,15 @@ public class App {
 
 				String checkStr = commandBits[2];
 
-				boolean checkInt = checkStr.matches("-?\\d+");
+				int foundId = getFoundIdByCheckStr(checkStr);
 
-				int foundId = 0;
-
-				if (checkInt) {
-					foundId = Integer.parseInt(checkStr);
-				} else {
+				if (foundId == 0) {
 					System.out.println("숫자만 입력해주세요.");
 					continue;
 				}
 
-				Article foundArticle = null;
+				Article foundArticle = getFoundArticleById(foundId);
 
-				for (Article article : articles) {
-					if (article.articleId == foundId) {
-						foundArticle = article;
-					} else {
-						System.out.println("검색된 게시글이 존재하지 않습니다.");
-						continue;
-					}
-				}
 				if (foundArticle == null) {
 					System.out.println("게시글이 존재하지 않습니다.");
 					continue;
@@ -153,27 +129,15 @@ public class App {
 
 				String checkStr = commandBits[2];
 
-				boolean checkInt = checkStr.matches("-?\\d+");
+				int foundId = getFoundIdByCheckStr(checkStr);
 
-				int foundId = 0;
-
-				if (checkInt) {
-					foundId = Integer.parseInt(checkStr);
-				} else {
+				if (foundId == 0) {
 					System.out.println("숫자만 입력해주세요.");
 					continue;
 				}
 
-				Article foundArticle = null;
+				Article foundArticle = getFoundArticleById(foundId);
 
-				for (Article article : articles) {
-					if (article.articleId == foundId) {
-						foundArticle = article;
-					} else {
-						System.out.println("검색된 게시글이 존재하지 않습니다.");
-						continue;
-					}
-				}
 				if (foundArticle == null) {
 					System.out.println("게시글이 존재하지 않습니다.");
 					continue;
@@ -193,7 +157,28 @@ public class App {
 		System.out.println("=== 프로그램 종료 ===");
 	}
 
-	static void makeTestData() {
+	Article getFoundArticleById(int foundId) {
+		Article foundArticle = null;
+
+		for (Article article : articles) {
+			if (article.articleId == foundId) {
+				foundArticle = article;
+			}
+		}
+		return foundArticle;
+	}
+
+	int getFoundIdByCheckStr(String checkStr) {
+		boolean checkInt = checkStr.matches("-?\\d+");
+		int foundId = 0;
+
+		if (checkInt) {
+			foundId = Integer.parseInt(checkStr);
+		}
+		return foundId;
+	}
+
+	void makeTestData() {
 		System.out.println("Article Test 데이터를 생성합니다.");
 
 		articles.add(new Article("제목 1", "내용 1"));
