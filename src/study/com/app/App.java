@@ -28,20 +28,12 @@ public class App {
 				System.out.println("회원가입 기능을 구현합니다.");
 
 				String loginId = null;
-				
-				while (true) {
-					boolean isJoinable = false;
 
+				while (true) {
 					System.out.println("회원가입 ID : ");
 					loginId = scanner.nextLine();
-
-					for (Member member : members) {
-						if (member.loginId.equals(loginId)) {
-							isJoinable = true;
-							break;
-						}
-					}
-					if (isJoinable) {
+					
+					if (isJoinable(loginId)) {
 						System.out.println("이미 존재하는 ID 입니다.");
 						continue;
 					}
@@ -73,7 +65,7 @@ public class App {
 				members.add(member);
 
 				System.out.println(member.name + "님 회원가입이 완료되었습니다.");
-				
+
 			} else if (command.equals("article write")) {
 				System.out.println("게시글 작성 기능을 구현합니다.");
 
@@ -258,5 +250,17 @@ public class App {
 		articles.add(new Article("제목 1", "내용 1"));
 		articles.add(new Article("제목 2", "내용 2"));
 		articles.add(new Article("제목 3", "내용 3"));
+	}
+
+	boolean isJoinable(String loginId) {
+		boolean isJoinable = false;
+
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				isJoinable = true;
+				break;
+			}
+		}
+		return isJoinable;
 	}
 }
