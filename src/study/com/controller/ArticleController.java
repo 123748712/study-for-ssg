@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import study.com.dto.Article;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 	private Scanner scanner;
 	private List<Article> articles;
 
@@ -14,8 +14,31 @@ public class ArticleController {
 		this.scanner = scanner;
 		this.articles = articles;
 	}
+	
+	public void doAction(String command, String actionMethod) {
+		switch(actionMethod) {
+		case "write" :
+			doWrite();
+			break;
+		case "list" :
+			showList(command);
+			break;
+		case "detail" :
+			showDetail(command);
+			break;
+		case "modify" :
+			doModify(command);
+			break;
+		case "delete" :
+			doDelete(command);
+			break;
+			default :
+				System.out.println("잘못된 명령어를 입력하셨습니다.");
+				break;
+		}
+	}
 
-	public void doWrite() {
+	private void doWrite() {
 		System.out.println("게시글 작성 기능을 구현합니다.");
 
 		System.out.println("제목 : ");
@@ -30,7 +53,7 @@ public class ArticleController {
 		System.out.println("게시글 작성이 완료되었습니다.");
 	}
 
-	public void showList(String command) {
+	private void showList(String command) {
 		System.out.println("게시글 리스트 기능을 구현합니다.");
 
 		if (articles.size() == 0) {
@@ -62,13 +85,13 @@ public class ArticleController {
 		}
 	}
 
-	public void showDetail(String command) {
+	private void showDetail(String command) {
 		System.out.println("상세게시글 기능을 구현합니다.");
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
 
-		if (commandBits.length > 3) {
+		if (commandBits.length != 3) {
 			System.out.println("명령어를 잘못 입력하셨습니다.");
 			return;
 		}
@@ -99,13 +122,13 @@ public class ArticleController {
 		System.out.println("내용 : " + foundArticle.body);
 	}
 
-	public void doModify(String command) {
+	private void doModify(String command) {
 		System.out.println("게시글 수정 기능을 구현합니다.");
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
 
-		if (commandBits.length > 3) {
+		if (commandBits.length != 3) {
 			System.out.println("명령어를 잘못 입력하셨습니다.");
 			return;
 		}
@@ -138,13 +161,13 @@ public class ArticleController {
 		System.out.println(foundArticle.articleId + "번 게시글이 수정되었습니다.");
 	}
 
-	public void doDelete(String command) {
+	private void doDelete(String command) {
 		System.out.println("게시글 삭제 기능을 구현합니다.");
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
 
-		if (commandBits.length > 3) {
+		if (commandBits.length != 3) {
 			System.out.println("명령어를 잘못 입력하셨습니다.");
 			return;
 		}
