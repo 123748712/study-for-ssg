@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.container.Container;
 import study.com.controller.ArticleController;
 import study.com.controller.Controller;
 import study.com.controller.MemberController;
@@ -25,12 +26,12 @@ public class App {
 		System.out.println("=== 프로그램 실행 ===");
 		Scanner scanner = new Scanner(System.in);
 
-		MemberController memberController = new MemberController(scanner, members);
-		ArticleController articleController = new ArticleController(scanner, articles);
+		MemberController memberController = new MemberController(scanner);
+		ArticleController articleController = new ArticleController(scanner);
 		Controller controller = null;
 		
-		articleController.makeTestData();
-		memberController.makeTestData();
+		Container.articleDao.makeTestData();
+		Container.memberDao.makeTestData();
 		
 		while (true) {
 			System.out.println("명령어를 입력해주세요 : ");
