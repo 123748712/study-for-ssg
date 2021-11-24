@@ -3,6 +3,7 @@ package study.com.controller;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.dto.Article;
 import study.com.dto.Member;
 
 public class MemberController extends Controller {
@@ -118,5 +119,12 @@ public class MemberController extends Controller {
 			}
 		}
 		return foundMember;
+	}
+	public void makeTestData() {
+		System.out.println("Member Test Data를 생성합니다.");
+
+		members.add(new Member("admin", "admin", "admin"));
+		members.add(new Member("user 1", "user 1", "user 1"));
+		members.add(new Member("user 2", "user 2", "user 2"));
 	}
 }

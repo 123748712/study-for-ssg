@@ -25,11 +25,13 @@ public class App {
 		System.out.println("=== 프로그램 실행 ===");
 		Scanner scanner = new Scanner(System.in);
 
-		makeTestData();
-
 		MemberController memberController = new MemberController(scanner, members);
 		ArticleController articleController = new ArticleController(scanner, articles);
 		Controller controller = null;
+		
+		articleController.makeTestData();
+		memberController.makeTestData();
+		
 		while (true) {
 			System.out.println("명령어를 입력해주세요 : ");
 			String command = scanner.nextLine().trim();
@@ -53,13 +55,5 @@ public class App {
 			controller.doAction(command, actionMethod);
 		}
 		System.out.println("=== 프로그램 종료 ===");
-	}
-
-	void makeTestData() {
-		System.out.println("Article Test 데이터를 생성합니다.");
-
-		articles.add(new Article("제목 1", "내용 1"));
-		articles.add(new Article("제목 2", "내용 2"));
-		articles.add(new Article("제목 3", "내용 3"));
 	}
 }
