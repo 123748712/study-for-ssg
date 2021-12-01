@@ -210,4 +210,12 @@ public class ArticleController extends Controller {
 		}
 		return foundArticle;
 	}
+
+	public void makeTestData() {
+		System.out.println("게시글이 생성되었습니다.");
+
+		articles.add(new Article("제목 1", "내용 1"));
+		articles.add(new Article("제목 2", "내용 2"));
+		articles.add(new Article("제목 3", "내용 3"));
+	}
 }

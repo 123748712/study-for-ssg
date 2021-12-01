@@ -3,6 +3,7 @@ package study.com.controller;
 import java.util.List;
 import java.util.Scanner;
 
+import study.com.dto.Article;
 import study.com.dto.Member;
 
 public class MemberController extends Controller {
@@ -84,18 +85,18 @@ public class MemberController extends Controller {
 		String loginPw = scanner.nextLine();
 
 		Member foundMember = getMemberByLoginId(loginId);
-		
-		if(foundMember == null) {
+
+		if (foundMember == null) {
 			System.out.println("존재하지 않는 아이디입니다.");
 			return;
 		}
 
-		if(!foundMember.equals(loginPw)) {
+		if (!foundMember.loginPw.equals(loginPw)) {
 			System.out.println("비밀번호를 다시 확인해주세요");
 			return;
 		}
 		loginedMember = foundMember;
-		
+
 		System.out.println(loginedMember.name + "님 로그인되었습니다.");
 	}
 
@@ -120,5 +121,12 @@ public class MemberController extends Controller {
 			}
 		}
 		return foundMember;
+	}
+	public void makeTestData() {
+		System.out.println("아이디를 생성합니다.");
+
+		members.add(new Member("admin", "admin", "admin"));
+		members.add(new Member("user 1", "user 1", "user 1"));
+		members.add(new Member("user 2", "user 2", "user 2"));
 	}
 }
