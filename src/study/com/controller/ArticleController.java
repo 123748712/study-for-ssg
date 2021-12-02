@@ -99,6 +99,11 @@ public class ArticleController extends Controller {
 
 	private void showDetail(String command) {
 		System.out.println("상세게시글 기능을 구현합니다.");
+		
+		if(loginedMember == null) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
@@ -136,6 +141,11 @@ public class ArticleController extends Controller {
 
 	private void doModify(String command) {
 		System.out.println("게시글 수정 기능을 구현합니다.");
+			
+		if(loginedMember == null) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 
 		command = command.trim();
 		String[] commandBits = command.split(" ");
