@@ -31,7 +31,7 @@ public class App {
 		memberController.makeTestData();
 
 		while (true) {
-			System.out.println("명령어를 입력해주세요 :");
+			System.out.println("명령어를 입력해주세요 : ");
 			String command = scanner.nextLine();
 			if (command.equals("system exit")) {
 				System.out.println("프로그램을 종료합니다.");
