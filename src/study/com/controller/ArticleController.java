@@ -18,7 +18,7 @@ public class ArticleController extends Controller {
 	public void doAction(String command, String actionMethod) {
 		switch (actionMethod) {
 		case "write":
-			doWrite();
+			doWrite(command);
 			break;
 		case "list":
 			showList(command);
@@ -36,8 +36,21 @@ public class ArticleController extends Controller {
 		}
 	}
 
-	private void doWrite() {
+	private void doWrite(String command) {
 		System.out.println("게시글 작성 기능을 구현합니다.");
+		
+		command = command.trim();
+		String[] commandBits = command.split(" ");
+		
+		if(commandBits.length != 2) {
+			System.out.println("잘못된 명령어를 입력하셨습니다.");
+			return;
+		}
+		
+		if(loginedMember == null) {
+			System.out.println("로그인 후 이용해주세요.");
+			return;
+		}
 
 		System.out.println("제목 : ");
 		String title = scanner.nextLine();
@@ -45,7 +58,7 @@ public class ArticleController extends Controller {
 		System.out.println("내용 : ");
 		String body = scanner.nextLine();
 
-		Article article = new Article(title, body);
+		Article article = new Article(title, body, loginedMember.memberId, loginedMember.name);
 
 		articles.add(article);
 
@@ -115,6 +128,7 @@ public class ArticleController extends Controller {
 
 		System.out.println("제목 : " + foundArticle.title);
 		System.out.println("번호 : " + foundArticle.id);
+		System.out.println("작성자 : " + foundArticle.memberName);
 		System.out.println("조회수 : " + foundArticle.hit);
 		System.out.println("작성날짜 : " + foundArticle.regDate);
 		System.out.println("내용 : " + foundArticle.body);
@@ -214,8 +228,8 @@ public class ArticleController extends Controller {
 	public void makeTestData() {
 		System.out.println("게시글이 생성되었습니다.");
 
-		articles.add(new Article("제목 1", "내용 1"));
-		articles.add(new Article("제목 2", "내용 2"));
-		articles.add(new Article("제목 3", "내용 3"));
+		articles.add(new Article("제목 1", "내용 1", 1, "admin"));
+		articles.add(new Article("제목 2", "내용 2", 2, "user 1"));
+		articles.add(new Article("제목 3", "내용 3", 3, "user 2"));
 	}
 }
