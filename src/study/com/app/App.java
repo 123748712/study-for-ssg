@@ -24,8 +24,8 @@ public class App {
 		System.out.println("=== 프로그램 실행 ===");
 		Scanner scanner = new Scanner(System.in);
 
-		ArticleController articleController = new ArticleController(scanner, articles);
-		MemberController memberController = new MemberController(scanner, members);
+		ArticleController articleController = new ArticleController(scanner);
+		MemberController memberController = new MemberController(scanner);
 		Controller controller = null;
 		articleController.makeTestData();
 		memberController.makeTestData();
