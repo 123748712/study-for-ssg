@@ -6,14 +6,15 @@ import java.util.Scanner;
 
 import study.com.container.Container;
 import study.com.dto.Article;
+import study.com.service.ArticleService;
 
 public class ArticleController extends Controller {
 	private Scanner scanner;
-	private List<Article> articles;
+	private ArticleService articleService;
 
 	public ArticleController(Scanner scanner) {
 		this.scanner = scanner;
-		this.articles = Container.articleDao.articles;
+		this.articleService = new ArticleService();
 	}
 
 	public void doAction(String command, String actionMethod) {
@@ -61,7 +62,7 @@ public class ArticleController extends Controller {
 
 		Article article = new Article(title, body, loginedMember.memberId, loginedMember.name);
 
-		articles.add(article);
+		articleService.add(article);
 
 		System.out.println(article.id + "번 게시글 작성이 완료되었습니다.");
 	}
@@ -69,28 +70,15 @@ public class ArticleController extends Controller {
 	private void showList(String command) {
 		System.out.println("게시글 리스트 기능을 구현합니다.");
 
-		if (articles.size() == 0) {
+		String searchKeyword = command.substring("article list".length()).trim();
+
+		List<Article> searchedArticles = articleService.getSearchedArticlesByKeyword(searchKeyword);
+
+		if (searchedArticles.size() == 0) {
 			System.out.println("게시글이 존재하지 않습니다.");
 			return;
 		}
 
-		String searchKeyword = command.substring("article list".length()).trim();
-
-		List<Article> searchedArticles = new ArrayList<>();
-
-		if (searchKeyword.length() > 0) {
-			for (Article article : articles) {
-				if (article.title.contains(searchKeyword)) {
-					searchedArticles.add(article);
-				}
-			}
-			if (searchedArticles.size() == 0) {
-				System.out.println("검색된 게시글이 존재하지 않습닌다.");
-				return;
-			}
-		} else {
-			searchedArticles = articles;
-		}
 		System.out.println("번호  |  제목");
 
 		for (Article article : searchedArticles) {
@@ -116,14 +104,14 @@ public class ArticleController extends Controller {
 
 		String checkStr = commandBits[2];
 
-		int foundId = getFoundIdByCheckStr(checkStr);
+		int foundId = articleService.getFoundIdByCheckStr(checkStr);
 
 		if (foundId == 0) {
 			System.out.println("잘못된 명령어를 입력하셨습니다");
 			return;
 		}
 
-		Article foundArticle = getFoundArticleById(foundId);
+		Article foundArticle = articleService.getFoundArticleById(foundId);
 
 		if (foundArticle == null) {
 			System.out.println("검색된 게시글이 존재하지 않습니다.");
@@ -158,14 +146,14 @@ public class ArticleController extends Controller {
 
 		String checkStr = commandBits[2];
 
-		int foundId = getFoundIdByCheckStr(checkStr);
+		int foundId = articleService.getFoundIdByCheckStr(checkStr);
 
 		if (foundId == 0) {
 			System.out.println("잘못된 명령어를 입력하셨습니다");
 			return;
 		}
 
-		Article foundArticle = getFoundArticleById(foundId);
+		Article foundArticle = articleService.getFoundArticleById(foundId);
 
 		if (foundArticle == null) {
 			System.out.println("검색된 게시글이 존재하지 않습니다.");
@@ -196,51 +184,22 @@ public class ArticleController extends Controller {
 
 		String checkStr = commandBits[2];
 
-		int foundId = getFoundIdByCheckStr(checkStr);
+		int foundId = articleService.getFoundIdByCheckStr(checkStr);
 
 		if (foundId == 0) {
 			System.out.println("잘못된 명령어를 입력하셨습니다");
 			return;
 		}
 
-		Article foundArticle = getFoundArticleById(foundId);
+		Article foundArticle = articleService.getFoundArticleById(foundId);
 
 		if (foundArticle == null) {
 			System.out.println("검색된 게시글이 존재하지 않습니다.");
 			return;
 		}
 
-		articles.remove(foundArticle);
+		articleService.remove(foundArticle);
 
 		System.out.println(foundArticle.id + "번 게시글이 삭제되었습니다.");
-	}
-
-	int getFoundIdByCheckStr(String checkStr) {
-		int foundId = 0;
-		boolean checkInt = checkStr.matches("-?\\d+");
-
-		if (checkInt) {
-			foundId = Integer.parseInt(checkStr);
-		}
-		return foundId;
-	}
-
-	Article getFoundArticleById(int foundId) {
-		Article foundArticle = null;
-
-		for (Article article : articles) {
-			if (article.id == foundId) {
-				foundArticle = article;
-			}
-		}
-		return foundArticle;
-	}
-
-	public void makeTestData() {
-		System.out.println("게시글이 생성되었습니다.");
-
-		articles.add(new Article("제목 1", "내용 1", 1, "admin"));
-		articles.add(new Article("제목 2", "내용 2", 2, "user 1"));
-		articles.add(new Article("제목 3", "내용 3", 3, "user 2"));
 	}
 }
