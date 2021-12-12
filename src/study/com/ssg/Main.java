@@ -28,6 +28,17 @@ public class Main {
 				articles.add(article);
 
 				System.out.println(article.articleId + "번 게시글 작성이 완료되었습니다.");
+			} else if (command.equals("article list")) {
+				System.out.println("게시글 리스트 기능을 구현합니다.");
+
+				if(articles.size() == 0) {
+					System.out.println("게시글이 존재하지 않습니다.");
+					continue;
+				}
+				System.out.println("번호 | 제목");
+				for (Article article : articles) {
+					System.out.println(article.articleId + " | " + article.title);
+				}
 			} else {
 				System.out.println("잘못된 명령어입니다");
 				continue;
