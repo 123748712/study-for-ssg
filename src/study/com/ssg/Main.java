@@ -119,7 +119,45 @@ public class Main {
 				foundArticle.body = body;
 
 				System.out.println(foundArticle.articleId + "번 게시글이 수정되었습니다.");
-			} else {
+			} else if (command.startsWith("article delete")) {
+				System.out.println("게시글 삭제 기능을 구현합니다.");
+
+				command = command.trim();
+				String[] commandBits = command.split(" ");
+
+				if (commandBits.length != 3) {
+					System.out.println("잘못된 명령어입니다..");
+					continue;
+				}
+
+				String checkStr = commandBits[2];
+				boolean checkInt = checkStr.matches("-?\\d+");
+
+				int foundId = 0;
+
+				if (checkInt) {
+					foundId = Integer.parseInt(checkStr);
+				} else {
+					System.out.println("잘못된 명령어입니다.");
+				}
+				Article foundArticle = null;
+
+				for (Article article : articles) {
+					if (article.articleId == foundId) {
+						foundArticle = article;
+					}
+				}
+				if (foundArticle == null) {
+					System.out.println("게시글이 존재하지 않습니다.");
+					continue;
+				}
+				System.out.println(foundArticle.articleId + "번 게시글이 삭제되었습니다.");
+
+				articles.remove(foundArticle);
+
+			}
+
+			else {
 
 				System.out.println("잘못된 명령어입니다.");
 				continue;
